@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import Quadratic from "./components/Quadratic.jsx";
 import styled from "styled-components";
+import QuadraticFactorise from "./components/Quadratic.jsx";
+import SingleBracketFactorise from "./components/SingleBracket.jsx";
 
 const StyledHeader = styled.div`
   color: #155263;
@@ -13,7 +14,8 @@ function App() {
   return (
     <StyledHeader>
       <h1>Pi & Seek</h1>
-      <Quadratic />
+      <QuadraticFactorise />
+      <SingleBracketFactorise />
     </StyledHeader>
   );
 }
