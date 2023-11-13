@@ -12,7 +12,7 @@ function App() {
 
   return (
     <StyledHeader>
-      <h1>Factorise!</h1>
+      <h1>Pi & Seek</h1>
       <Quadratic />
     </StyledHeader>
   );

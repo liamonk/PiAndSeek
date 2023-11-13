@@ -13,6 +13,7 @@ const StyledView = styled.div`
   margin-left: auto;
   text-align: center;
   border-radius: 5px;
+  width: 400px;
 `;
 
 const StyledButton = styled.button`
