@@ -8,14 +8,20 @@ const StyledHeader = styled.div`
   color: #155263;
 `;
 
+const StyledContainer = styled.div`
+  display: flex;
+`;
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <StyledHeader>
       <h1>Pi & Seek</h1>
-      <QuadraticFactorise />
-      <SingleBracketFactorise />
+      <StyledContainer>
+        <QuadraticFactorise />
+        <SingleBracketFactorise />
+      </StyledContainer>
     </StyledHeader>
   );
 }

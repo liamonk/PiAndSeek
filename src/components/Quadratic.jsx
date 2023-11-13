@@ -44,7 +44,7 @@ const StyledTextArea = styled.textarea`
 
 export default function QuadraticFactorise() {
   const [coefficents, setCoefficents] = React.useState([1, 2, 1]);
-  const [userAnswer, setUserAnswer] = React.useState("( x + )( x + )");
+  const [userAnswer, setUserAnswer] = React.useState("(? x + ?)(? x + ?)");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("(x+1)(x+1)");
