@@ -1,19 +1,5 @@
-.blue-color { 
-	background: #155263; 
-}
-	
-.dark-orange-color { 
-	background: #ff6f3c; 
-}
-
-.light-orange-color { 
-	background: #ff9a3c; 
-}
-
-.yellow-color { 
-	background: #ffc93c; 
-}
-
 body{
- background-color:   #ff9a3c
+ background-color:   #DFFFFA;
+ margin: 0px;
+ color: #ac5293
 }
