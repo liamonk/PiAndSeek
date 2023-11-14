@@ -48,15 +48,42 @@ export default function SingleBracketFactorise() {
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("2(x+2)");
+  const [hcf, setHcf] = React.useState(1);
+
+  function findCommonFactors(value1, value2) {
+    let absValue1 = Math.abs(value1);
+    let absValue2 = Math.abs(value2);
+    let max = Math.max(absValue1, absValue2);
+    let factors = [];
+    for (let i = 0; i < max + 1; i++) {
+      if (
+        absValue1 % i == 0 &&
+        absValue2 % i == 0 &&
+        absValue1 != 0 &&
+        absValue2 != 0
+      ) {
+        factors.push(i);
+      } else {
+        factors = [1];
+      }
+    }
+    setHcf(factors.slice(factors.length - 1));
+    console.log(factors);
+  }
+
+  console.log(`hcf ${hcf}`);
+  console.log("correctAnswer " + correctAnswer);
 
   function newQuestion() {
     /* a(bx + c) = dx + e */
+    setHcf(1);
     let a = Math.floor(Math.random() * 11) + 1;
     let b = Math.floor(Math.random() * 11) - 5;
     let c = Math.floor(Math.random() * 11) - 5;
     let d = a * b;
     let e = a * c;
     setCoefficents([d, e]);
+    findCommonFactors(b, c);
     let solution = `${a}(${b}x+${c})`.replace(/\+\-/g, "-").replace(/1x/, "x");
     setCorrectAnswer(solution);
     setCorrect(false);
@@ -80,7 +107,6 @@ export default function SingleBracketFactorise() {
       setCorrect(true);
       setIncorrect(false);
     } else setIncorrect(true);
-    console.log("correctAnswer " + correctAnswer);
   }
 
   function handleAnswerChange(event) {
