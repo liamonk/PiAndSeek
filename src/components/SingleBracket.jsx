@@ -48,48 +48,42 @@ export default function SingleBracketFactorise() {
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("2(x+2)");
-  const [hcf, setHcf] = React.useState(1);
 
-  function findCommonFactors(value1, value2) {
-    let absValue1 = Math.abs(value1);
-    let absValue2 = Math.abs(value2);
-    let max = Math.max(absValue1, absValue2);
-    let factors = [];
-    for (let i = 0; i < max + 1; i++) {
-      if (
-        absValue1 % i == 0 &&
-        absValue2 % i == 0 &&
-        absValue1 != 0 &&
-        absValue2 != 0
-      ) {
-        factors.push(i);
-      } else {
-        factors = [1];
-      }
+  function findHcf(a, b) {
+    a = Math.abs(Math.floor(a));
+    b = Math.abs(Math.floor(b));
+    while (b !== 0) {
+      let temp = b;
+      b = a % b;
+      a = temp;
     }
-    setHcf(factors.slice(factors.length - 1));
-    console.log(factors);
+    return a;
   }
 
-  console.log(`hcf ${hcf}`);
-  console.log("correctAnswer " + correctAnswer);
+  function coefficentGenerator(range) {
+    let coefficent = Math.floor(Math.random() * range) + 1;
+    let sign = Math.random();
+    sign < 0.5 ? (sign = -1) : (sign = 1);
+    return coefficent * sign;
+  }
 
   function newQuestion() {
     /* a(bx + c) = dx + e */
-    setHcf(1);
-    let a = Math.floor(Math.random() * 11) + 1;
-    let b = Math.floor(Math.random() * 11) - 5;
-    let c = Math.floor(Math.random() * 11) - 5;
+    let a = Math.abs(coefficentGenerator(6));
+    let b = coefficentGenerator(6);
+    let c = coefficentGenerator(6);
     let d = a * b;
     let e = a * c;
     setCoefficents([d, e]);
-    findCommonFactors(b, c);
-    let solution = `${a}(${b}x+${c})`.replace(/\+\-/g, "-").replace(/1x/, "x");
+    let divisor = findHcf(b, c);
+    let solution = `${a * divisor}(${b / divisor}x+${c / divisor})`
+      .replace(/\+\-/g, "-")
+      .replace(/1x/, "x");
     setCorrectAnswer(solution);
     setCorrect(false);
     setIncorrect(false);
     setUserAnswer("( x + )");
-    console.log(a, b, c, d, e);
+    console.log("correctAnswer " + correctAnswer);
   }
 
   let firstSign = "";
