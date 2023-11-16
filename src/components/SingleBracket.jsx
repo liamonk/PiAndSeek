@@ -42,12 +42,22 @@ const StyledTextArea = styled.textarea`
   max-width: 90%;
 `;
 
+const StyledSettingsButton = styled.button`
+  margin-left: auto;
+  border: none;
+  background-color: #fedaf6;
+`;
+
 export default function SingleBracketFactorise() {
   const [userAnswer, setUserAnswer] = React.useState("?(x+ ?)");
   const [coefficents, setCoefficents] = React.useState([2, 4]);
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("2(x+2)");
+  const [settings, setSettings] = React.useState({
+    aNegative: false,
+    showSettings: false,
+  });
 
   function findHcf(a, b) {
     a = Math.abs(Math.floor(a));
@@ -107,8 +117,26 @@ export default function SingleBracketFactorise() {
     setUserAnswer(event.target.value);
   }
 
+  function handleSettings() {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      showSettings: !prevSettings.showSettings,
+    }));
+    console.log(settings.showSettings);
+  }
+
   return (
     <StyledView>
+      <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
+      <span>
+        {settings.showSettings ? (
+          <div>
+            <p>Change settings</p>
+          </div>
+        ) : (
+          ""
+        )}
+      </span>
       <h3>Factorise</h3>
       <span>{`${coefficents[0]}x ${firstSign} ${coefficents[1]}
         `}</span>

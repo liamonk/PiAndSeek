@@ -9,7 +9,6 @@ const StyledView = styled.div`
   margin: 5px;
   display: flex;
   flex-direction: column;
-  overflow: clip;
   text-align: center;
   border-radius: 5px;
   width: 400px;
@@ -61,24 +60,7 @@ export default function QuadraticFactorise() {
     showSettings: false,
   });
 
-  function newQuestion() {
-    /* y = ax^2 + bx + c = (dx + e)(fx + g) */
-    let d = Math.floor(Math.random() * 3) + 1;
-    let e = Math.floor(Math.random() * 11) - 5;
-    let f = Math.floor(Math.random() * 3) + 1;
-    let g = Math.floor(Math.random() * 11) - 5;
-    let a = d * f;
-    let b = d * g + e * f;
-    let c = e * g;
-    let solution = `(${d}x+${e})(${f}x+${g})`
-      .replace(/\+\-/g, "-")
-      .replace(/1x/, "x");
-    setCorrectAnswer(solution);
-    setCoefficents([a, b, c]);
-    setCorrect(false);
-    setIncorrect(false);
-    setUserAnswer("( x + )( x + )");
-  }
+  function newQuestion() {}
 
   const checkAnswer = () => {
     let reordedAnswer = "";
@@ -86,8 +68,8 @@ export default function QuadraticFactorise() {
       prevAnswer.replace(/ /g, "").replace(/\+\-/g, "-").replace(/1x/, "x")
     );
     reordedAnswer = userAnswer.split(")(");
-    reordedAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
-    if (userAnswer == correctAnswer || correctAnswer == reordedAnswer) {
+    let reordedUserAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
+    if (userAnswer == correctAnswer || correctAnswer == reordedUserAnswer) {
       setCorrect(true);
       setIncorrect(false);
     } else setIncorrect(true);
@@ -106,40 +88,13 @@ export default function QuadraticFactorise() {
     console.log(settings.showSettings);
   }
 
-  let firstSign = "";
-  if (coefficents[1] >= 0) {
-    firstSign = "+";
-  } else {
-    firstSign = "";
-  }
-
-  let secondSign = "";
-  if (coefficents[2] >= 0) {
-    secondSign = "+";
-  } else {
-    secondSign = "";
-  }
   return (
     <StyledView>
       <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
-      <span>
-        {settings.showSettings ? (
-          <div>
-            <p>Change settings</p>
-          </div>
-        ) : (
-          ""
-        )}
-      </span>
-      <h3>Factorise</h3>
+      <span>{settings.showSettings ? <div>Change settings</div> : ""}</span>
+      <h3>{/* Title  */}</h3>
 
-      <span>
-        {`${coefficents[0] != 1 ? coefficents[0] : ""}x`}
-        <sup>2</sup>
-        {`${firstSign} ${
-          coefficents[1] != 1 ? coefficents[1] : ""
-        }x ${secondSign} ${coefficents[2]}`}
-      </span>
+      <span>{/*Question here */}</span>
 
       <StyledTextArea
         value={userAnswer}
