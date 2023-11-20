@@ -82,13 +82,16 @@ export default function QuadraticFactorise() {
   }
 
   const checkAnswer = () => {
-    setUserAnswer((prevAnswer) => prevAnswer.replace(/ /g, ""));
-    if (userAnswer == correctAnswer) {
-      setCorrect(true);
-      setIncorrect(false);
-    } else setIncorrect(true);
-    console.log("correctAnswer " + correctAnswer);
-    console.log(coefficents);
+    setUserAnswer((prevAnswer) => {
+      let modifiedAnswer = prevAnswer.replace(/ /g, "");
+      if (modifiedAnswer == correctAnswer) {
+        setCorrect(true);
+        setIncorrect(false);
+      } else setIncorrect(true);
+      console.log("correctAnswer " + correctAnswer);
+      console.log(coefficents);
+      return modifiedAnswer;
+    });
   };
 
   function handleAnswerChange(event) {

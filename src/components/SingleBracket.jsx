@@ -104,13 +104,18 @@ export default function SingleBracketFactorise() {
   }
 
   function checkAnswer() {
-    setUserAnswer((prevAnswer) =>
-      prevAnswer.replace(/ /g, "").replace(/\+\-/g, "-").replace(/1x/, "x")
-    );
-    if (userAnswer == correctAnswer) {
-      setCorrect(true);
-      setIncorrect(false);
-    } else setIncorrect(true);
+    setUserAnswer((prevAnswer) => {
+      let modifiedAnswer = prevAnswer
+        .replace(/ /g, "")
+        .replace(/\+\-/g, "-")
+        .replace(/1x/, "x");
+
+      if (modifiedAnswer === correctAnswer) {
+        setCorrect(true);
+        setIncorrect(false);
+      } else setIncorrect(true);
+      return modifiedAnswer;
+    });
   }
 
   function handleAnswerChange(event) {

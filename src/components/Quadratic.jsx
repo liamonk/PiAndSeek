@@ -82,15 +82,19 @@ export default function QuadraticFactorise() {
 
   const checkAnswer = () => {
     let reordedAnswer = "";
-    setUserAnswer((prevAnswer) =>
-      prevAnswer.replace(/ /g, "").replace(/\+\-/g, "-").replace(/1x/, "x")
-    );
-    reordedAnswer = userAnswer.split(")(");
-    reordedAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
-    if (userAnswer == correctAnswer || correctAnswer == reordedAnswer) {
-      setCorrect(true);
-      setIncorrect(false);
-    } else setIncorrect(true);
+    setUserAnswer((prevAnswer) => {
+      let modifiedAnswer = prevAnswer
+        .replace(/ /g, "")
+        .replace(/\+\-/g, "-")
+        .replace(/1x/, "x");
+      reordedAnswer = modifiedAnswer.split(")(");
+      reordedAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
+      if (modifiedAnswer == correctAnswer || correctAnswer == reordedAnswer) {
+        setCorrect(true);
+        setIncorrect(false);
+      } else setIncorrect(true);
+      return modifiedAnswer;
+    });
     console.log("correctAnswer " + correctAnswer);
   };
 
