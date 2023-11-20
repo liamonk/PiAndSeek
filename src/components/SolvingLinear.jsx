@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-/*Working on migrating to this as the base component 
-with the question and check answer functionality as a prop*/
-
 const StyledView = styled.div`
   background-color: #fedaf6;
   padding: 10px;
@@ -53,27 +50,45 @@ const StyledSettingsButton = styled.button`
 `;
 
 export default function QuadraticFactorise() {
-  const [coefficents, setCoefficents] = React.useState([1, 2, 1]);
-  const [userAnswer, setUserAnswer] = React.useState("");
+  const [coefficents, setCoefficents] = React.useState([2, 3, 4, 10]);
+  const [userAnswer, setUserAnswer] = React.useState("x=?");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
-  const [correctAnswer, setCorrectAnswer] = React.useState("");
+  const [correctAnswer, setCorrectAnswer] = React.useState("x=3");
   const [settings, setSettings] = React.useState({
     aNegative: false,
     showSettings: false,
   });
 
+  function coefficentGenerator(range) {
+    let coefficent = Math.floor(Math.random() * range) + 1;
+    let sign = Math.random();
+    sign < 0.5 ? (sign = -1) : (sign = 1);
+    return coefficent * sign;
+  }
+
   function newQuestion() {
-    /*need to refactor other components to feed into this*/
+    /*ax+b=c*/
+    let a = coefficentGenerator(12);
+    let b = coefficentGenerator(12);
+    let x = coefficentGenerator(12);
+    let c = a * x + b;
+    setCoefficents([a, x, b, c]);
+    let solution = `x=${x}`;
+    setCorrectAnswer(solution);
+    setCorrect(false);
+    setIncorrect(false);
+    setUserAnswer("x=?");
   }
 
   const checkAnswer = () => {
-    /*need to refactor other components to feed into this */
-    if (userAnswer == correctAnswer || correctAnswer == reordedUserAnswer) {
+    setUserAnswer((prevAnswer) => prevAnswer.replace(/ /g, ""));
+    if (userAnswer == correctAnswer) {
       setCorrect(true);
       setIncorrect(false);
     } else setIncorrect(true);
     console.log("correctAnswer " + correctAnswer);
+    console.log(coefficents);
   };
 
   function handleAnswerChange(event) {
@@ -92,9 +107,11 @@ export default function QuadraticFactorise() {
     <StyledView>
       <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
       <span>{settings.showSettings ? <div>Change settings</div> : ""}</span>
-      <h3>{/* Title  */}</h3>
+      <h3>Solve</h3>
 
-      <span>{/*Question here */}</span>
+      <span>{`${coefficents[0]}x${coefficents[2] > -1 ? "+" : ""}${
+        coefficents[2]
+      }=${coefficents[3]}`}</span>
 
       <StyledTextArea
         value={userAnswer}
