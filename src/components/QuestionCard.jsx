@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+/*Working on migrating to this as the base component 
+with the question and check answer functionality as a prop*/
+
 const StyledView = styled.div`
   background-color: #fedaf6;
   padding: 10px;
@@ -60,15 +63,12 @@ export default function QuadraticFactorise() {
     showSettings: false,
   });
 
-  function newQuestion() {}
+  function newQuestion() {
+    /*need to refactor other components to feed into this*/
+  }
 
   const checkAnswer = () => {
-    let reordedAnswer = "";
-    setUserAnswer((prevAnswer) =>
-      prevAnswer.replace(/ /g, "").replace(/\+\-/g, "-").replace(/1x/, "x")
-    );
-    reordedAnswer = userAnswer.split(")(");
-    let reordedUserAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
+    /*need to refactor other components to feed into this */
     if (userAnswer == correctAnswer || correctAnswer == reordedUserAnswer) {
       setCorrect(true);
       setIncorrect(false);
