@@ -153,7 +153,7 @@ export default function SingleBracketFactorise() {
       <StyledButton onClick={newQuestion}>New Question</StyledButton>
       <span>
         {correct ? "Well done!" : ""}
-        {incorrect ? "Try again!" : ""}
+        {incorrect ? `Try again! (common factor is never negative)` : ""}
       </span>
     </StyledView>
   );

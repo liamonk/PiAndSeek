@@ -57,15 +57,15 @@ export default function QuadraticFactorise() {
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("(x+1)(x+1)");
   const [settings, setSettings] = React.useState({
-    aNegative: false,
+    aGreaterOne: false,
     showSettings: false,
   });
 
   function newQuestion() {
     /* y = ax^2 + bx + c = (dx + e)(fx + g) */
-    let d = Math.floor(Math.random() * 3) + 1;
+    let d = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
     let e = Math.floor(Math.random() * 11) - 5;
-    let f = Math.floor(Math.random() * 3) + 1;
+    let f = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
     let g = Math.floor(Math.random() * 11) - 5;
     let a = d * f;
     let b = d * g + e * f;
@@ -102,13 +102,21 @@ export default function QuadraticFactorise() {
     setUserAnswer(event.target.value);
   }
 
-  function handleSettings() {
+  function showSettings() {
     setSettings((prevSettings) => ({
       ...prevSettings,
       showSettings: !prevSettings.showSettings,
     }));
     console.log(settings.showSettings);
   }
+
+  /* got to be a better way to handle the key*/
+  const handleSettingsChange = () => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      aGreaterOne: !prevSettings.aGreaterOne,
+    }));
+  };
 
   let firstSign = "";
   if (coefficents[1] >= 0) {
@@ -125,11 +133,14 @@ export default function QuadraticFactorise() {
   }
   return (
     <StyledView>
-      <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
+      <StyledSettingsButton onClick={showSettings}>⚙</StyledSettingsButton>
       <span>
         {settings.showSettings ? (
           <div>
             <p>Change settings</p>
+            <StyledButton onClick={handleSettingsChange}>
+              {settings.aGreaterOne ? "a > 1" : "a = 1"}
+            </StyledButton>
           </div>
         ) : (
           ""
