@@ -50,19 +50,37 @@ const StyledSettingsButton = styled.button`
   background-color: #fedaf6;
 `;
 
+const StyledSettingsContainer = styled.div`
+  display: flex;
+  font-size: 15px;
+  flex-direction: column;
+`;
+
 export default function QuadraticFactorise() {
   const [coefficents, setCoefficents] = React.useState([1, 2, 1]);
   const [userAnswer, setUserAnswer] = React.useState("(? x + ?)(? x + ?)");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
-  const [correctAnswer, setCorrectAnswer] = React.useState("(x+1)(x+1)");
+  const [correctAnswer, setCorrectAnswer] = React.useState(["(x+1)(x+1)", ""]);
   const [settings, setSettings] = React.useState({
     aGreaterOne: false,
+    negativeCoefficents: true,
     showSettings: false,
   });
 
+  function findHcf(a, b) {
+    a = Math.abs(Math.floor(a));
+    b = Math.abs(Math.floor(b));
+    while (b !== 0) {
+      let temp = b;
+      b = a % b;
+      a = temp;
+    }
+    return a;
+  }
+
   function newQuestion() {
-    /* y = ax^2 + bx + c = (dx + e)(fx + g) */
+    /* y = ax^2 + bx + c = h(dx + e)i(fx + g) */
     let d = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
     let e = Math.floor(Math.random() * 11) - 5;
     let f = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
@@ -70,10 +88,31 @@ export default function QuadraticFactorise() {
     let a = d * f;
     let b = d * g + e * f;
     let c = e * g;
-    let solution = `(${d}x+${e})(${f}x+${g})`
+    let h = 1;
+    let i = 1;
+    let firstBracketHCF = findHcf(d, e);
+    let secondBracketHCF = findHcf(f, g);
+    if (firstBracketHCF != 1) {
+      h = firstBracketHCF;
+      console.log(h);
+    }
+    if (secondBracketHCF != 1) {
+      i = secondBracketHCF;
+      console.log(i);
+    }
+    let solution1 = `${h != 1 ? h : ""}${i != 1 ? i : ""}(${d / h}x+${e / h})(${
+      f / i
+    }x+${g / i})`
       .replace(/\+\-/g, "-")
-      .replace(/1x/, "x");
-    setCorrectAnswer(solution);
+      .replace(/1x/g, "x")
+      .replace(/ /g, "");
+    let solution2 = `${h != 1 ? h : ""}${i != 1 ? i : ""}(${f / i}x+${g / i})(${
+      d / h
+    }x+${e / h})`
+      .replace(/\+\-/g, "-")
+      .replace(/1x/g, "x")
+      .replace(/ /g, "");
+    setCorrectAnswer([solution1, solution2]);
     setCoefficents([a, b, c]);
     setCorrect(false);
     setIncorrect(false);
@@ -81,18 +120,22 @@ export default function QuadraticFactorise() {
   }
 
   const checkAnswer = () => {
-    let reordedAnswer = "";
     setUserAnswer((prevAnswer) => {
       let modifiedAnswer = prevAnswer
         .replace(/ /g, "")
         .replace(/\+\-/g, "-")
         .replace(/1x/, "x");
-      reordedAnswer = modifiedAnswer.split(")(");
-      reordedAnswer = "(" + reordedAnswer[1] + reordedAnswer[0] + ")";
-      if (modifiedAnswer == correctAnswer || correctAnswer == reordedAnswer) {
+      if (
+        modifiedAnswer == correctAnswer[0] ||
+        correctAnswer[1] == modifiedAnswer
+      ) {
         setCorrect(true);
         setIncorrect(false);
-      } else setIncorrect(true);
+      } else {
+        setIncorrect(true);
+        setCorrect(false);
+      }
+
       return modifiedAnswer;
     });
     console.log("correctAnswer " + correctAnswer);
@@ -110,7 +153,15 @@ export default function QuadraticFactorise() {
     console.log(settings.showSettings);
   }
 
-  /* got to be a better way to handle the key*/
+  /*  
+  const handleSettingsChange = (settingToChange) => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      [settingToChange]: !prevSettings[settingToChange],
+    }));
+  };
+  */
+
   const handleSettingsChange = () => {
     setSettings((prevSettings) => ({
       ...prevSettings,
@@ -136,12 +187,18 @@ export default function QuadraticFactorise() {
       <StyledSettingsButton onClick={showSettings}>⚙</StyledSettingsButton>
       <span>
         {settings.showSettings ? (
-          <div>
+          <StyledSettingsContainer>
             <p>Change settings</p>
-            <StyledButton onClick={handleSettingsChange}>
+            <StyledButton
+              style={{ height: "25px" }}
+              onClick={handleSettingsChange}
+            >
               {settings.aGreaterOne ? "a > 1" : "a = 1"}
             </StyledButton>
-          </div>
+            <StyledButton style={{ height: "25px" }}>
+              negatives {settings.negativeCoefficents ? "✓" : "☓"}
+            </StyledButton>
+          </StyledSettingsContainer>
         ) : (
           ""
         )}
