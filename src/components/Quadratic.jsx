@@ -79,12 +79,20 @@ export default function QuadraticFactorise() {
     return a;
   }
 
+  function coefficentGenerator(range) {
+    let coefficent = Math.floor(Math.random() * range) + 1;
+    let sign = Math.random();
+    sign < 0.5 ? (sign = -1) : (sign = 1);
+    return coefficent * sign;
+  }
+
   function newQuestion() {
     /* y = ax^2 + bx + c = h(dx + e)i(fx + g) */
-    let d = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
-    let e = Math.floor(Math.random() * 11) - 5;
-    let f = Math.floor(Math.random() * (settings.aGreaterOne ? 3 : 0)) + 1;
-    let g = Math.floor(Math.random() * 11) - 5;
+    let d = Math.abs(coefficentGenerator(settings.aGreaterOne ? 6 : 1));
+    let e = coefficentGenerator(10);
+    let f = Math.abs(coefficentGenerator(settings.aGreaterOne ? 3 : 1));
+    let g = coefficentGenerator(10);
+    console.log(d, e, f, g);
     let a = d * f;
     let b = d * g + e * f;
     let c = e * g;
