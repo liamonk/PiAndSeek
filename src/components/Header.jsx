@@ -9,19 +9,18 @@ const StyledHeaderMain = styled.div`
   display: flex;
 `;
 
+const StyledImage = styled.img`
+  height: 70px;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
 export default function header() {
   return (
     <StyledHeaderMain>
       <h1>Pi and Seek</h1>
-      <img
-        style={{
-          height: "70px",
-          marginLeft: "auto",
-          marginTop: "auto",
-          marginBottom: "auto",
-        }}
-        src="src/assets/logo.png"
-      />
+      <StyledImage src="src/assets/logo.png" />
     </StyledHeaderMain>
   );
 }
