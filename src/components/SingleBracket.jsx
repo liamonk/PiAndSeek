@@ -25,6 +25,7 @@ const StyledButton = styled.button`
   margin-left: auto;
   margin-right: auto;
   color: #ac5293;
+  font-family: "Smooch Sans", sans-serif;
 
   &:hover {
     background-color: #e5c6ff;
@@ -46,6 +47,18 @@ const StyledSettingsButton = styled.button`
   margin-left: auto;
   border: none;
   background-color: #fedaf6;
+  font-family: "Smooch Sans", sans-serif;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e5c6ff;
+  }
+`;
+
+const StyledSettingsContainer = styled.div`
+  display: flex;
+  font-size: 15px;
+  flex-direction: column;
 `;
 
 export default function SingleBracketFactorise() {
@@ -132,8 +145,10 @@ export default function SingleBracketFactorise() {
 
   return (
     <StyledView>
-      <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
-      <span>
+      <StyledSettingsButton onClick={handleSettings}>
+        Settings ⚙
+      </StyledSettingsButton>
+      <StyledSettingsContainer>
         {settings.showSettings ? (
           <div>
             <p>Change settings</p>
@@ -141,7 +156,7 @@ export default function SingleBracketFactorise() {
         ) : (
           ""
         )}
-      </span>
+      </StyledSettingsContainer>
       <h3>Factorise</h3>
       <span>{`${coefficents[0]}x ${firstSign} ${coefficents[1]}
         `}</span>

@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   margin-left: auto;
   margin-right: auto;
   color: #ac5293;
+  font-family: "Smooch Sans", sans-serif;
 
   &:hover {
     background-color: #e5c6ff;
@@ -48,6 +49,12 @@ const StyledSettingsButton = styled.button`
   margin-left: auto;
   border: none;
   background-color: #fedaf6;
+  font-family: "Smooch Sans", sans-serif;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e5c6ff;
+  }
 `;
 
 const StyledSettingsContainer = styled.div`
@@ -201,7 +208,9 @@ export default function QuadraticFactorise() {
   }
   return (
     <StyledView>
-      <StyledSettingsButton onClick={showSettings}>⚙</StyledSettingsButton>
+      <StyledSettingsButton onClick={showSettings}>
+        Settings ⚙
+      </StyledSettingsButton>
       <span>
         {settings.showSettings ? (
           <StyledSettingsContainer>
