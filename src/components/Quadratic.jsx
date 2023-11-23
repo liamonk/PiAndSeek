@@ -57,14 +57,16 @@ const StyledSettingsContainer = styled.div`
 `;
 
 export default function QuadraticFactorise() {
-  const [coefficents, setCoefficents] = React.useState([1, 2, 1]);
+  const [questionCoefficents, setQuestionCoefficents] = React.useState([
+    1, 2, 1,
+  ]);
   const [userAnswer, setUserAnswer] = React.useState("(? x + ?)(? x + ?)");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState(["(x+1)(x+1)", ""]);
   const [settings, setSettings] = React.useState({
     aGreaterOne: false,
-    negativeCoefficents: true,
+    negativeCoefficents: false,
     showSettings: false,
   });
 
@@ -89,9 +91,13 @@ export default function QuadraticFactorise() {
   function newQuestion() {
     /* y = ax^2 + bx + c = h(dx + e)i(fx + g) */
     let d = Math.abs(coefficentGenerator(settings.aGreaterOne ? 5 : 1));
-    let e = coefficentGenerator(10);
+    let e = settings.negativeCoefficents
+      ? coefficentGenerator(6)
+      : Math.abs(coefficentGenerator(6));
     let f = Math.abs(coefficentGenerator(settings.aGreaterOne ? 2 : 1));
-    let g = coefficentGenerator(10);
+    let g = settings.negativeCoefficents
+      ? coefficentGenerator(6)
+      : Math.abs(coefficentGenerator(6));
     let a = d * f;
     let b = d * g + e * f;
     let c = e * g;
@@ -118,7 +124,7 @@ export default function QuadraticFactorise() {
       .replace(/1x/g, "x")
       .replace(/ /g, "");
     setCorrectAnswer([solution1, solution2]);
-    setCoefficents([a, b, c]);
+    setQuestionCoefficents([a, b, c]);
     setCorrect(false);
     setIncorrect(false);
     setUserAnswer("( x + )( x + )");
@@ -166,22 +172,29 @@ export default function QuadraticFactorise() {
   };
   */
 
-  const handleSettingsChange = () => {
+  const handleANegativeSettingsChange = () => {
     setSettings((prevSettings) => ({
       ...prevSettings,
       aGreaterOne: !prevSettings.aGreaterOne,
     }));
   };
 
+  const handleNegativeCoefficentsSettingsChange = () => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      negativeCoefficents: !prevSettings.negativeCoefficents,
+    }));
+  };
+
   let firstSign = "";
-  if (coefficents[1] >= 0) {
+  if (questionCoefficents[1] >= 0) {
     firstSign = "+";
   } else {
     firstSign = "";
   }
 
   let secondSign = "";
-  if (coefficents[2] >= 0) {
+  if (questionCoefficents[2] >= 0) {
     secondSign = "+";
   } else {
     secondSign = "";
@@ -195,11 +208,14 @@ export default function QuadraticFactorise() {
             <p>Change settings</p>
             <StyledButton
               style={{ height: "25px" }}
-              onClick={handleSettingsChange}
+              onClick={handleANegativeSettingsChange}
             >
               {settings.aGreaterOne ? "a > 1" : "a = 1"}
             </StyledButton>
-            <StyledButton style={{ height: "25px" }}>
+            <StyledButton
+              style={{ height: "25px" }}
+              onClick={handleNegativeCoefficentsSettingsChange}
+            >
               negatives {settings.negativeCoefficents ? "✓" : "☓"}
             </StyledButton>
           </StyledSettingsContainer>
@@ -210,11 +226,11 @@ export default function QuadraticFactorise() {
       <h3>Factorise</h3>
 
       <span>
-        {`${coefficents[0] != 1 ? coefficents[0] : ""}x`}
+        {`${questionCoefficents[0] != 1 ? questionCoefficents[0] : ""}x`}
         <sup>2</sup>
         {`${firstSign} ${
-          coefficents[1] != 1 ? coefficents[1] : ""
-        }x ${secondSign} ${coefficents[2]}`}
+          questionCoefficents[1] != 1 ? questionCoefficents[1] : ""
+        }x ${secondSign} ${questionCoefficents[2]}`}
       </span>
 
       <StyledTextArea
