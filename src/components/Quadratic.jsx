@@ -88,11 +88,10 @@ export default function QuadraticFactorise() {
 
   function newQuestion() {
     /* y = ax^2 + bx + c = h(dx + e)i(fx + g) */
-    let d = Math.abs(coefficentGenerator(settings.aGreaterOne ? 6 : 1));
+    let d = Math.abs(coefficentGenerator(settings.aGreaterOne ? 5 : 1));
     let e = coefficentGenerator(10);
-    let f = Math.abs(coefficentGenerator(settings.aGreaterOne ? 3 : 1));
+    let f = Math.abs(coefficentGenerator(settings.aGreaterOne ? 2 : 1));
     let g = coefficentGenerator(10);
-    console.log(d, e, f, g);
     let a = d * f;
     let b = d * g + e * f;
     let c = e * g;
@@ -102,11 +101,9 @@ export default function QuadraticFactorise() {
     let secondBracketHCF = findHcf(f, g);
     if (firstBracketHCF != 1) {
       h = firstBracketHCF;
-      console.log(h);
     }
     if (secondBracketHCF != 1) {
       i = secondBracketHCF;
-      console.log(i);
     }
     let solution1 = `${h != 1 ? h : ""}${i != 1 ? i : ""}(${d / h}x+${e / h})(${
       f / i
@@ -146,7 +143,7 @@ export default function QuadraticFactorise() {
 
       return modifiedAnswer;
     });
-    console.log("correctAnswer " + correctAnswer);
+    console.log("correctAnswer " + correctAnswer[0] + "=" + correctAnswer[1]);
   };
 
   function handleAnswerChange(event) {
@@ -158,7 +155,6 @@ export default function QuadraticFactorise() {
       ...prevSettings,
       showSettings: !prevSettings.showSettings,
     }));
-    console.log(settings.showSettings);
   }
 
   /*  

@@ -63,12 +63,9 @@ export default function QuadraticFactorise() {
     showSettings: false,
   });
 
-  function newQuestion() {
-    /*need to refactor other components to feed into this*/
-  }
+  function newQuestion() {}
 
   const checkAnswer = () => {
-    /*need to refactor other components to feed into this */
     if (userAnswer == correctAnswer || correctAnswer == reordedUserAnswer) {
       setCorrect(true);
       setIncorrect(false);
