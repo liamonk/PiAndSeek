@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React from "react";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header.jsx";
-import QuadraticFactorise from "./components/Quadratic.jsx";
+import FactoriseQuadratic from "./components/FactorisingQuadratic.jsx";
 import SingleBracketFactorise from "./components/SingleBracket.jsx";
 import SolvingLinear from "./components/SolvingLinear.jsx";
 
@@ -17,16 +17,20 @@ const StyledContainer = styled.div`
 `;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = React.useState(0);
+  const onUpdateCount = (newCount) => {
+    setCount(newCount);
+  };
 
   return (
     <>
       <Header />
       <StyledBody>
+        <div style={{ marginLeft: "10px" }}>Correct answers: {count}</div>
         <StyledContainer>
-          <QuadraticFactorise />
-          <SingleBracketFactorise />
-          <SolvingLinear />
+          <FactoriseQuadratic count={count} onUpdateCount={onUpdateCount} />
+          <SingleBracketFactorise count={count} onUpdateCount={onUpdateCount} />
+          <SolvingLinear count={count} onUpdateCount={onUpdateCount} />
         </StyledContainer>
       </StyledBody>
     </>

@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   margin-right: auto;
   color: #ac5293;
   font-family: "Smooch Sans", sans-serif;
+  font-weight: 700;
 
   &:hover {
     background-color: #e5c6ff;
@@ -62,16 +63,21 @@ const StyledSettingsContainer = styled.div`
   flex-direction: column;
 `;
 
-export default function QuadraticFactorise() {
+export default function QuadraticFactorise(props) {
   const [coefficents, setCoefficents] = React.useState([2, 3, 4, 10]);
   const [userAnswer, setUserAnswer] = React.useState("x=?");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
+  const [questionCompleted, setQuestionCompleted] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("x=3");
   const [settings, setSettings] = React.useState({
     aNegative: false,
     showSettings: false,
   });
+  const updateCount = () => {
+    const updatedCount = props.count + 1;
+    props.onUpdateCount(updatedCount);
+  };
 
   function coefficentGenerator(range) {
     let coefficent = Math.floor(Math.random() * range) + 1;
@@ -91,6 +97,7 @@ export default function QuadraticFactorise() {
     setCorrectAnswer(solution);
     setCorrect(false);
     setIncorrect(false);
+    setQuestionCompleted(false);
     setUserAnswer("x=?");
   }
 
@@ -100,6 +107,8 @@ export default function QuadraticFactorise() {
       if (modifiedAnswer == correctAnswer) {
         setCorrect(true);
         setIncorrect(false);
+        setQuestionCompleted(true);
+        questionCompleted ? {} : updateCount();
       } else setIncorrect(true);
       console.log("correctAnswer " + correctAnswer);
       console.log(coefficents);

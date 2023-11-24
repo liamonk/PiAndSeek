@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   margin-right: auto;
   color: #ac5293;
   font-family: "Smooch Sans", sans-serif;
+  font-weight: 700;
 
   &:hover {
     background-color: #e5c6ff;
@@ -61,16 +62,21 @@ const StyledSettingsContainer = styled.div`
   flex-direction: column;
 `;
 
-export default function SingleBracketFactorise() {
+export default function SingleBracketFactorise(props) {
   const [userAnswer, setUserAnswer] = React.useState("?(x+ ?)");
   const [coefficents, setCoefficents] = React.useState([2, 4]);
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
+  const [questionCompleted, setQuestionCompleted] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState("2(x+2)");
   const [settings, setSettings] = React.useState({
     aNegative: false,
     showSettings: false,
   });
+  const updateCount = () => {
+    const updatedCount = props.count + 1;
+    props.onUpdateCount(updatedCount);
+  };
 
   function findHcf(a, b) {
     a = Math.abs(Math.floor(a));
@@ -106,6 +112,7 @@ export default function SingleBracketFactorise() {
     setCorrect(false);
     setIncorrect(false);
     setUserAnswer("( x + )");
+    setQuestionCompleted(false);
     console.log("correctAnswer " + correctAnswer);
   }
 
@@ -126,6 +133,8 @@ export default function SingleBracketFactorise() {
       if (modifiedAnswer === correctAnswer) {
         setCorrect(true);
         setIncorrect(false);
+        setQuestionCompleted(true);
+        questionCompleted ? {} : updateCount();
       } else setIncorrect(true);
       return modifiedAnswer;
     });

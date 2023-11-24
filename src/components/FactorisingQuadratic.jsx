@@ -27,6 +27,7 @@ const StyledButton = styled.button`
   margin-right: auto;
   color: #ac5293;
   font-family: "Smooch Sans", sans-serif;
+  font-weight: 700;
 
   &:hover {
     background-color: #e5c6ff;
@@ -60,22 +61,27 @@ const StyledSettingsButton = styled.button`
 const StyledSettingsContainer = styled.div`
   display: flex;
   font-size: 15px;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
-export default function QuadraticFactorise() {
+export default function FactoriseQuadratic(props) {
   const [questionCoefficents, setQuestionCoefficents] = React.useState([
     1, 2, 1,
   ]);
   const [userAnswer, setUserAnswer] = React.useState("(? x + ?)(? x + ?)");
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
+  const [questionCompleted, setQuestionCompleted] = React.useState(false);
   const [correctAnswer, setCorrectAnswer] = React.useState(["(x+1)(x+1)", ""]);
   const [settings, setSettings] = React.useState({
     aGreaterOne: false,
     negativeCoefficents: false,
     showSettings: false,
   });
+  const updateCount = () => {
+    const updatedCount = props.count + 1;
+    props.onUpdateCount(updatedCount);
+  };
 
   function findHcf(a, b) {
     a = Math.abs(Math.floor(a));
@@ -135,6 +141,7 @@ export default function QuadraticFactorise() {
     setCorrect(false);
     setIncorrect(false);
     setUserAnswer("( x + )( x + )");
+    setQuestionCompleted(false);
   }
 
   const checkAnswer = () => {
@@ -149,6 +156,8 @@ export default function QuadraticFactorise() {
       ) {
         setCorrect(true);
         setIncorrect(false);
+        setQuestionCompleted(true);
+        questionCompleted ? {} : updateCount();
       } else {
         setIncorrect(true);
         setCorrect(false);
@@ -214,15 +223,14 @@ export default function QuadraticFactorise() {
       <span>
         {settings.showSettings ? (
           <StyledSettingsContainer>
-            <p>Change settings</p>
             <StyledButton
-              style={{ height: "25px" }}
+              style={{ height: "30px" }}
               onClick={handleANegativeSettingsChange}
             >
               {settings.aGreaterOne ? "a > 1" : "a = 1"}
             </StyledButton>
             <StyledButton
-              style={{ height: "25px" }}
+              style={{ height: "30px" }}
               onClick={handleNegativeCoefficentsSettingsChange}
             >
               negatives {settings.negativeCoefficents ? "✓" : "☓"}
