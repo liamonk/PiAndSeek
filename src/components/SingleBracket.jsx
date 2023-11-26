@@ -98,7 +98,7 @@ export default function SingleBracketFactorise(props) {
 
   function newQuestion() {
     /* a(bx + c) = dx + e */
-    let a = Math.abs(coefficentGenerator(6));
+    let a = Math.abs(coefficentGenerator(6) + 1);
     let b = coefficentGenerator(6);
     let c = coefficentGenerator(6);
     let d = a * b;
