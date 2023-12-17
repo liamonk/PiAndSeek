@@ -5,6 +5,7 @@ import Header from "./components/Header.jsx";
 import FactoriseQuadratic from "./components/FactorisingQuadratic.jsx";
 import SingleBracketFactorise from "./components/SingleBracket.jsx";
 import SolvingLinear from "./components/SolvingLinear.jsx";
+import SolveXBothSides from "./components/SolveXBothSides.jsx";
 
 const StyledBody = styled.div`
   color: #ac5293;
@@ -31,6 +32,7 @@ function App() {
           <FactoriseQuadratic count={count} onUpdateCount={onUpdateCount} />
           <SingleBracketFactorise count={count} onUpdateCount={onUpdateCount} />
           <SolvingLinear count={count} onUpdateCount={onUpdateCount} />
+          <SolveXBothSides count={count} onUpdateCount={onUpdateCount} />
         </StyledContainer>
       </StyledBody>
     </>
