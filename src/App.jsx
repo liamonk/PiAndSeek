@@ -2,10 +2,11 @@ import React from "react";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header.jsx";
-import FactoriseQuadratic from "./components/FactorisingQuadratic.jsx";
-import SingleBracketFactorise from "./components/SingleBracket.jsx";
-import SolvingLinear from "./components/SolvingLinear.jsx";
-import SolveXBothSides from "./components/SolveXBothSides.jsx";
+import FactoriseQuadratic from "./components/question_cards/FactorisingQuadratic.jsx";
+import SingleBracketFactorise from "./components/question_cards/SingleBracket.jsx";
+import SolvingLinear from "./components/question_cards/SolvingLinear.jsx";
+import SolveXBothSides from "./components/question_cards/SolveXBothSides.jsx";
+import SimplifyLikeTerms from "./components/question_cards/SimplifyLikeTerms.jsx";
 
 const StyledBody = styled.div`
   color: #ac5293;
@@ -33,6 +34,7 @@ function App() {
           <SingleBracketFactorise count={count} onUpdateCount={onUpdateCount} />
           <SolvingLinear count={count} onUpdateCount={onUpdateCount} />
           <SolveXBothSides count={count} onUpdateCount={onUpdateCount} />
+          <SimplifyLikeTerms count={count} onUpdateCount={onUpdateCount} />
         </StyledContainer>
       </StyledBody>
     </>

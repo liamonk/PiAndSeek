@@ -6,7 +6,7 @@ const StyledView = styled.div`
   padding: 10px;
   font-size: 20px;
   color: #ac5293;
-  margin: 5px;
+  margin: 25px;
   display: flex;
   flex-direction: column;
   text-align: center;

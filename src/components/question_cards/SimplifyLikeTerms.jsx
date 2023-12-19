@@ -6,7 +6,7 @@ const StyledView = styled.div`
   padding: 10px;
   font-size: 20px;
   color: #ac5293;
-  margin: 5px;
+  margin: 25px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -62,32 +62,18 @@ const StyledSettingsContainer = styled.div`
   flex-direction: column;
 `;
 
-export default function SingleBracketFactorise(props) {
-  const [userAnswer, setUserAnswer] = React.useState("?(x+ ?)");
-  const [coefficents, setCoefficents] = React.useState([2, 4]);
+export default function SimplifyLikeTerms(props) {
+  const [userAnswer, setUserAnswer] = React.useState("?x + ?y");
+  const [coefficents, setCoefficents] = React.useState([2, 4, 6, 8]);
   const [correct, setCorrect] = React.useState(false);
   const [incorrect, setIncorrect] = React.useState(false);
   const [questionCompleted, setQuestionCompleted] = React.useState(false);
-  const [correctAnswer, setCorrectAnswer] = React.useState("2(x+2)");
-  const [settings, setSettings] = React.useState({
-    aNegative: false,
-    showSettings: false,
-  });
+  const [correctAnswer, setCorrectAnswer] = React.useState("8x+12y");
+  const [settings, setSettings] = React.useState({});
   const updateCount = () => {
     const updatedCount = props.count + 1;
     props.onUpdateCount(updatedCount);
   };
-
-  function findHcf(a, b) {
-    a = Math.abs(Math.floor(a));
-    b = Math.abs(Math.floor(b));
-    while (b !== 0) {
-      let temp = b;
-      b = a % b;
-      a = temp;
-    }
-    return a;
-  }
 
   function coefficentGenerator(range) {
     let coefficent = Math.floor(Math.random() * range) + 1;
@@ -97,30 +83,22 @@ export default function SingleBracketFactorise(props) {
   }
 
   function newQuestion() {
-    /* a(bx + c) = dx + e */
-    let a = Math.abs(coefficentGenerator(6) + 1);
-    let b = coefficentGenerator(6);
-    let c = coefficentGenerator(6);
-    let d = a * b;
-    let e = a * c;
-    setCoefficents([d, e]);
-    let divisor = findHcf(b, c);
-    let solution = `${a * divisor}(${b / divisor}x+${c / divisor})`
+    /* ax+by+cx+dy */
+    let a = coefficentGenerator(6) + 1;
+    let b = coefficentGenerator(6) + 1;
+    let c = coefficentGenerator(6) + 1;
+    let d = coefficentGenerator(6) + 1;
+    setCoefficents([a, b, c, d]);
+    let solution = `${a + c}x+${b + d}y`
       .replace(/\+\-/g, "-")
-      .replace(/1x/, "x");
+      .replace(/\b1x\b/g, "x");
     setCorrectAnswer(solution);
     setCorrect(false);
     setIncorrect(false);
-    setUserAnswer("( x + )");
+    setUserAnswer("?x + ?y");
     setQuestionCompleted(false);
+    console.log(solution);
     console.log("correctAnswer " + correctAnswer);
-  }
-
-  let firstSign = "";
-  if (coefficents[1] >= 0) {
-    firstSign = "+";
-  } else {
-    firstSign = "";
   }
 
   function checkAnswer() {
@@ -128,7 +106,7 @@ export default function SingleBracketFactorise(props) {
       let modifiedAnswer = prevAnswer
         .replace(/ /g, "")
         .replace(/\+\-/g, "-")
-        .replace(/1x/, "x");
+        .replace(/\b1x\b/g, "x");
 
       if (modifiedAnswer === correctAnswer) {
         setCorrect(true);
@@ -166,9 +144,11 @@ export default function SingleBracketFactorise(props) {
           ""
         )}
       </StyledSettingsContainer>
-      <h3>Factorise</h3>
-      <span>{`${coefficents[0]}x ${firstSign} ${coefficents[1]}
-        `}</span>
+      <h3>Simpify</h3>
+      <span>{`${coefficents[0]}x 
+      ${coefficents[1] >= 0 ? "+" : ""} ${coefficents[1]}y 
+      ${coefficents[2] >= 0 ? "+" : ""} ${coefficents[2]}x
+      ${coefficents[3] >= 0 ? "+" : ""} ${coefficents[3]}y`}</span>
       <StyledTextArea
         value={userAnswer}
         onChange={handleAnswerChange}

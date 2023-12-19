@@ -6,7 +6,7 @@ const StyledView = styled.div`
   padding: 10px;
   font-size: 20px;
   color: #ac5293;
-  margin: 5px;
+  margin: 25px;
   display: flex;
   flex-direction: column;
   overflow: clip;
@@ -149,7 +149,7 @@ export default function FactoriseQuadratic(props) {
       let modifiedAnswer = prevAnswer
         .replace(/ /g, "")
         .replace(/\+\-/g, "-")
-        .replace(/1x/, "x");
+        .replace(/\b1x\b/g, "x");
       if (
         modifiedAnswer == correctAnswer[0] ||
         correctAnswer[1] == modifiedAnswer
