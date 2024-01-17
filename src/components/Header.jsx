@@ -20,7 +20,9 @@ export default function header() {
   return (
     <StyledHeaderMain>
       <h1>Pi and Seek</h1>
-      <StyledImage src="../src/assets/logo.png" />
+      <StyledImage src={"../src/assets/logo.png"} />
     </StyledHeaderMain>
   );
 }
+
+
