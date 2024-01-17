@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import logo from "/src/assets/logo.png"
 
 const StyledHeaderMain = styled.div`
   background-color: #b0e1ff;
@@ -20,7 +21,7 @@ export default function header() {
   return (
     <StyledHeaderMain>
       <h1>Pi and Seek</h1>
-      <StyledImage src={"../src/assets/logo.png"} />
+      <StyledImage src={logo} />
     </StyledHeaderMain>
   );
 }
