@@ -1,68 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-
-const StyledView = styled.div`
-  background-color: #fedaf6;
-  padding: 10px;
-  font-size: 20px;
-  color: #ac5293;
-  margin: 25px;
-  display: flex;
-  flex-direction: column;
-  overflow: clip;
-  text-align: center;
-  border-radius: 5px;
-  width: 400px;
-`;
-
-const StyledButton = styled.button`
-  background-color: #dffffa;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #bffcff;
-  border-radius: 3px;
-  width: 10em;
-  margin-left: auto;
-  margin-right: auto;
-  color: #ac5293;
-  font-family: "Smooch Sans", sans-serif;
-  font-weight: 700;
-
-  &:hover {
-    background-color: #e5c6ff;
-  }
-`;
-
-const StyledTextArea = styled.textarea`
-  width: 300px;
-  height: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  text-align: centre;
-  font-size: 20px;
-  max-width: 90%;
-  color: AC5293;
-`;
-
-const StyledSettingsButton = styled.button`
-  margin-left: auto;
-  border: none;
-  background-color: #fedaf6;
-  font-family: "Smooch Sans", sans-serif;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #e5c6ff;
-  }
-`;
-
-const StyledSettingsContainer = styled.div`
-  display: flex;
-  font-size: 15px;
-  flex-direction: row;
-`;
+import { StyledView } from "./CardStyles";
+import { StyledButton } from "./CardStyles";
+import { StyledTextArea } from "./CardStyles";
+import { StyledSettingsButton } from "./CardStyles";
+import {StyledSettingsContainer} from "./CardStyles";
+import { MathHelper } from "../../mathHelper";
 
 export default function FactoriseQuadratic(props) {
   const [questionCoefficents, setQuestionCoefficents] = React.useState([
@@ -83,41 +26,27 @@ export default function FactoriseQuadratic(props) {
     props.onUpdateCount(updatedCount);
   };
 
-  function findHcf(a, b) {
-    a = Math.abs(Math.floor(a));
-    b = Math.abs(Math.floor(b));
-    while (b !== 0) {
-      let temp = b;
-      b = a % b;
-      a = temp;
-    }
-    return a;
-  }
 
-  function coefficentGenerator(range) {
-    let coefficent = Math.floor(Math.random() * range) + 1;
-    let sign = Math.random();
-    sign < 0.5 ? (sign = -1) : (sign = 1);
-    return coefficent * sign;
-  }
+
+
 
   function newQuestion() {
     /* y = ax^2 + bx + c = h(dx + e)i(fx + g) */
-    let d = Math.abs(coefficentGenerator(settings.aGreaterOne ? 5 : 1));
+    let d = Math.abs(MathHelper.coefficentGenerator(settings.aGreaterOne ? 5 : 1));
     let e = settings.negativeCoefficents
-      ? coefficentGenerator(6)
-      : Math.abs(coefficentGenerator(6));
-    let f = Math.abs(coefficentGenerator(settings.aGreaterOne ? 2 : 1));
+      ? MathHelper.coefficentGenerator(6)
+      : Math.abs(MathHelper.coefficentGenerator(6));
+    let f = Math.abs(MathHelper.coefficentGenerator(settings.aGreaterOne ? 2 : 1));
     let g = settings.negativeCoefficents
-      ? coefficentGenerator(6)
-      : Math.abs(coefficentGenerator(6));
+      ? MathHelper.coefficentGenerator(6)
+      : Math.abs(MathHelper.coefficentGenerator(6));
     let a = d * f;
     let b = d * g + e * f;
     let c = e * g;
     let h = 1;
     let i = 1;
-    let firstBracketHCF = findHcf(d, e);
-    let secondBracketHCF = findHcf(f, g);
+    let firstBracketHCF = MathHelper.findHcf(d, e);
+    let secondBracketHCF = MathHelper.findHcf(f, g);
     if (firstBracketHCF != 1) {
       h = firstBracketHCF;
     }
@@ -186,7 +115,7 @@ export default function FactoriseQuadratic(props) {
       [settingToChange]: !prevSettings[settingToChange],
     }));
   };
-  */
+*/
 
   const handleANegativeSettingsChange = () => {
     setSettings((prevSettings) => ({

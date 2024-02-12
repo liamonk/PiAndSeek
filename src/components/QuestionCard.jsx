@@ -1,97 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { StyledView } from "./CardStyles";
+import { StyledButton } from "./CardStyles";
+import { StyledTextArea } from "./CardStyles";
+import { StyledSettingsButton } from "./CardStyles";
+import { StyledSettingsContainer } from "./CardStyles";
+import { MathHelper } from "../../mathHelper";
 
-/*Working on migrating to this as the base component 
-with the question and check answer functionality as a prop*/
+export default function QuestionCard(props) {
+  const [questionCoefficents, setQuestionCoefficents] = useState([1, 2, 1]);
+  const [userAnswer, setUserAnswer] = useState("(? x + ?)(? x + ?)");
+  
+  const [correct, setCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
+  const [questionCompleted, setQuestionCompleted] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState(["(x+1)(x+1)", ""]);
+  
+  const [aGreaterOne, setAGreaterOne] = useState(false);
+  const [negativeCoefficents, setNegativeCoefficents] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
-const StyledView = styled.div`
-  background-color: #fedaf6;
-  padding: 10px;
-  font-size: 20px;
-  color: #ac5293;
-  margin: 5px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  border-radius: 5px;
-  width: 400px;
-`;
-
-const StyledButton = styled.button`
-  background-color: #dffffa;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #bffcff;
-  border-radius: 3px;
-  width: 10em;
-  margin-left: auto;
-  margin-right: auto;
-  color: #ac5293;
-
-  &:hover {
-    background-color: #e5c6ff;
-  }
-`;
-
-const StyledTextArea = styled.textarea`
-  width: 300px;
-  height: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  text-align: centre;
-  font-size: 20px;
-  max-width: 90%;
-  color: AC5293;
-`;
-
-const StyledSettingsButton = styled.button`
-  margin-left: auto;
-  border: none;
-  background-color: #fedaf6;
-`;
-
-export default function QuadraticFactorise() {
-  const [coefficents, setCoefficents] = React.useState([1, 2, 1]);
-  const [userAnswer, setUserAnswer] = React.useState("");
-  const [correct, setCorrect] = React.useState(false);
-  const [incorrect, setIncorrect] = React.useState(false);
-  const [correctAnswer, setCorrectAnswer] = React.useState("");
-  const [settings, setSettings] = React.useState({
-    aNegative: false,
-    showSettings: false,
-  });
-
-  function newQuestion() {}
-
-  const checkAnswer = () => {
-    if (userAnswer == correctAnswer || correctAnswer == reordedUserAnswer) {
-      setCorrect(true);
-      setIncorrect(false);
-    } else setIncorrect(true);
-    console.log("correctAnswer " + correctAnswer);
+  const updateCount = () => {
+    const updatedCount = props.count + 1;
+    props.onUpdateCount(updatedCount);
   };
 
   function handleAnswerChange(event) {
     setUserAnswer(event.target.value);
   }
 
-  function handleSettings() {
-    setSettings((prevSettings) => ({
-      ...prevSettings,
-      showSettings: !prevSettings.showSettings,
-    }));
-    console.log(settings.showSettings);
-  }
+  
+
 
   return (
     <StyledView>
-      <StyledSettingsButton onClick={handleSettings}>⚙</StyledSettingsButton>
-      <span>{settings.showSettings ? <div>Change settings</div> : ""}</span>
-      <h3>{/* Title  */}</h3>
+      <StyledSettingsButton
+        onClick={() => {
+          setShowSettings(!showSettings);
+        }}
+      >
+        Settings ⚙
+      </StyledSettingsButton>
+      <span>
+        {showSettings ? (
+          <StyledSettingsContainer>
+            <StyledButton
+              style={{ height: "30px" }}
+              onClick={() => setAGreaterOne(!aGreaterOne)}
+            >
+              {aGreaterOne ? "a > 1" : "a = 1"}
+            </StyledButton>
+            <StyledButton
+              style={{ height: "30px" }}
+              onClick={() => setNegativeCoefficents(!negativeCoefficents)}
+            >
+              negatives {negativeCoefficents ? "✓" : "☓"}
+            </StyledButton>
+          </StyledSettingsContainer>
+        ) : (
+          ""
+        )}
+      </span>
+      <h3>Factorise</h3>
 
-      <span>{/*Question here */}</span>
+      <span>
+        {`${questionCoefficents[0] != 1 ? questionCoefficents[0] : ""}x`}
+        <sup>2</sup>
+        {`${firstSign} ${
+          questionCoefficents[1] != 1 ? questionCoefficents[1] : ""
+        }x ${secondSign} ${questionCoefficents[2]}`}
+      </span>
 
       <StyledTextArea
         value={userAnswer}

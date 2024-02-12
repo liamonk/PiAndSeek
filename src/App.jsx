@@ -7,6 +7,7 @@ import SingleBracketFactorise from "./components/question_cards/SingleBracket.js
 import SolvingLinear from "./components/question_cards/SolvingLinear.jsx";
 import SolveXBothSides from "./components/question_cards/SolveXBothSides.jsx";
 import SimplifyLikeTerms from "./components/question_cards/SimplifyLikeTerms.jsx";
+// import QuestionCard from "./components/QuestionCard.jsx";
 
 const StyledBody = styled.div`
   color: #ac5293;
@@ -30,6 +31,7 @@ function App() {
       <StyledBody>
         <div style={{ marginLeft: "10px" }}>Correct answers: {count}</div>
         <StyledContainer>
+          {/* <QuestionCard question={} checkAnswerFn={} correct={} reset={} settingsComponent={}/> */}
           <FactoriseQuadratic count={count} onUpdateCount={onUpdateCount} />
           <SingleBracketFactorise count={count} onUpdateCount={onUpdateCount} />
           <SolvingLinear count={count} onUpdateCount={onUpdateCount} />
